@@ -33,7 +33,7 @@ jobs:
         run: echo "www.fluentra.ro" > dist/CNAME   # 👈 replace with your domain
 
       - name: Upload production-ready build files
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           path: ./dist
 
