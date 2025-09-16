@@ -27,8 +27,8 @@ jobs:
         run: npm ci
       - name: Setup Git identity
         run: |
-          git config --global user.email "action@github.com"
-          git config --global user.name "GitHub Action"
+          git config --global user.email "roman.aandreii@gmail.com"
+          git config --global user.name "capcea"
 
 
       - name: Deploy
