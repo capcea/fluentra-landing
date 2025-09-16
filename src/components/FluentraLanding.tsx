@@ -2,6 +2,9 @@ import React from 'react';
 import { useLanguage } from './LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { 
   TrendingUp, 
   Clock, 
@@ -157,8 +160,16 @@ export const FluentraLanding: React.FC = () => {
   const { language } = useLanguage();
   const t = content[language];
 
+  const [isContactOpen, setIsContactOpen] = React.useState(false);
+  const [contactName, setContactName] = React.useState('');
+  const [contactEmail, setContactEmail] = React.useState('');
+  const [contactMessage, setContactMessage] = React.useState('');
+
+  const openContactModal = () => setIsContactOpen(true);
+  const closeContactModal = () => setIsContactOpen(false);
+
   const handleContactClick = () => {
-    window.location.href = `mailto:${t.contact.email}`;
+    openContactModal();
   };
 
   const handlePhoneClick = () => {
@@ -330,6 +341,85 @@ export const FluentraLanding: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Contact Modal */}
+      <Dialog open={isContactOpen} onOpenChange={setIsContactOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{language === 'ro' ? 'Contactează-ne' : 'Contact Us'}</DialogTitle>
+            <DialogDescription>
+              {language === 'ro'
+                ? 'Completează formularul și revenim în cel mai scurt timp.'
+                : 'Fill out the form and we will get back to you shortly.'}
+            </DialogDescription>
+          </DialogHeader>
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              const to = t.contact.email;
+              const subject = language === 'ro' ? `Mesaj de pe website - ${contactName || 'Vizitator'}` : `Website message - ${contactName || 'Visitor'}`;
+              const mailtoBody = [
+                `${language === 'ro' ? 'Nume' : 'Name'}: ${contactName || '-'}`,
+                `${language === 'ro' ? 'Email' : 'Email'}: ${contactEmail || '-'}`,
+                '',
+                `${language === 'ro' ? 'Mesaj' : 'Message'}:`,
+                `${contactMessage || '-'}`,
+              ].join('\n');
+
+              const attempt = async () => {
+                try {
+                  const res = await fetch('/api/send-email', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      name: contactName,
+                      email: contactEmail,
+                      message: contactMessage,
+                      to,
+                    }),
+                  });
+                  if (!res.ok) throw new Error('Request failed');
+                  alert(language === 'ro' ? 'Mesaj trimis cu succes!' : 'Message sent successfully!');
+                } catch {
+                  const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailtoBody)}`;
+                  window.location.href = mailto;
+                } finally {
+                  closeContactModal();
+                  setContactName('');
+                  setContactEmail('');
+                  setContactMessage('');
+                }
+              };
+              attempt();
+            }}
+            className="space-y-4"
+          >
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="contact-name">{language === 'ro' ? 'Nume' : 'Name'}</label>
+              <Input id="contact-name" value={contactName} onChange={(e) => setContactName(e.target.value)} placeholder={language === 'ro' ? 'Numele tău' : 'Your name'} />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="contact-email">Email</label>
+              <Input id="contact-email" type="email" value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} placeholder="you@example.com" required />
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium" htmlFor="contact-message">{language === 'ro' ? 'Mesaj' : 'Message'}</label>
+              <Textarea id="contact-message" value={contactMessage} onChange={(e) => setContactMessage(e.target.value)} placeholder={language === 'ro' ? 'Cum te putem ajuta?' : 'How can we help?'} rows={5} />
+            </div>
+            <DialogFooter>
+              <Button type="button" variant="ghost" onClick={closeContactModal}>
+                {language === 'ro' ? 'Anulează' : 'Cancel'}
+              </Button>
+              <Button type="submit">
+                {language === 'ro' ? 'Trimite' : 'Send'}
+              </Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
+
+// Contact Modal
+// Placed outside of main return block is not valid; include inside component return above if needed.
