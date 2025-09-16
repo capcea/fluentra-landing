@@ -1,0 +1,7 @@
+name = "fluentra-landing-page"
+type = "module"  # or "webpack" / "modules" depending on your setup
+account_id = "bb8b1cea5cc1df2ebd8dc4a60eaa9e2b"
+workers_dev = true
+
+# Add this:
+compatibility_date = "2025-09-16"
