@@ -3,12 +3,12 @@ name: Deploy Vite site to GitHub Pages (Custom Domain)
 on:
   push:
     branches:
-      - main  # runs on pushes to main branch
+      - main  # Runs on pushes to the main branch
 
 permissions:
   contents: read
   pages: write
-  id-token: write
+  id-token: write  # Required for deployment
 
 jobs:
   build:
@@ -30,18 +30,7 @@ jobs:
         run: npm run build
 
       - name: Add CNAME for custom domain
-        run: echo "www.fluentra.ro" > dist/CNAME   # 👈 replace with your domain
+        run: echo "www.fluentra.ro" > dist/CNAME
 
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v4
-        with:
-          path: ./dist
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-    steps:
-      - name: Deploy to GitHub Pages
-        uses: actions/deploy-pages@v2
+      - name: Upload GitHub Pages artifact  # ✅ CORRECTED
+        uses: actions
