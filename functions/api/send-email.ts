@@ -1,4 +1,4 @@
-export const onRequestPost: PagesFunction = async ({ request, env }) => {
+export const onRequestPost = async ({ request, env }: { request: Request; env: Record<string, string> }) => {
   try {
     const { name, email, message, to } = await request.json();
     if (!email || !message) {
@@ -10,7 +10,7 @@ export const onRequestPost: PagesFunction = async ({ request, env }) => {
       return new Response(JSON.stringify({ error: 'CONTACT_TO_EMAIL not set' }), { status: 500, headers: { 'content-type': 'application/json' } });
     }
 
-    const from = env.CONTACT_FROM_EMAIL || 'Fluentra <onboarding@resend.dev>';
+    const from = env.CONTACT_FROM_EMAIL || 'Fluentra <onboarding@fluentra.ro>';
     const subject = `New website contact${name ? ` - ${name}` : ''}`;
     const text = `From: ${name || 'Visitor'} <${email}>\n\n${message}`;
 
