@@ -26,11 +26,11 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Clear dist for junk
-        run: rm -rf dist
+      - name: Predeploy
+        run: npm run predeploy
 
-      - name: Build Vite app
-        run: npm run build
+      - name: Deploy
+        run: npm run deploy
 
       - name: Add CNAME for custom domain
         run: echo "www.fluentra.ro" > dist/CNAME
