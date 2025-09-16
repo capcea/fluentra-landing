@@ -5,6 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { toast } from '@/components/ui/use-toast';
 import { 
   TrendingUp, 
   Clock, 
@@ -16,7 +17,8 @@ import {
   Mail,
   MapPin,
   ArrowRight,
-  CheckCircle
+  CheckCircle,
+  Loader2
 } from 'lucide-react';
 
 const content = {
@@ -164,6 +166,7 @@ export const FluentraLanding: React.FC = () => {
   const [contactName, setContactName] = React.useState('');
   const [contactEmail, setContactEmail] = React.useState('');
   const [contactMessage, setContactMessage] = React.useState('');
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
 
   const openContactModal = () => setIsContactOpen(true);
   const closeContactModal = () => setIsContactOpen(false);
@@ -367,6 +370,7 @@ export const FluentraLanding: React.FC = () => {
               ].join('\n');
 
               const attempt = async () => {
+                setIsSubmitting(true);
                 try {
                   const res = await fetch('/api/send-email', {
                     method: 'POST',
@@ -379,11 +383,20 @@ export const FluentraLanding: React.FC = () => {
                     }),
                   });
                   if (!res.ok) throw new Error('Request failed');
-                  alert(language === 'ro' ? 'Mesaj trimis cu succes!' : 'Message sent successfully!');
+                  toast({
+                    title: language === 'ro' ? 'Trimis' : 'Sent',
+                    description: language === 'ro' ? 'Mesajul a fost trimis cu succes.' : 'Your message was sent successfully.',
+                  });
                 } catch {
+                  toast({
+                    variant: 'destructive',
+                    title: language === 'ro' ? 'Nu s-a putut trimite' : 'Could not send',
+                    description: language === 'ro' ? 'Se deschide clientul de email ca soluție de rezervă.' : 'Opening your email client as a fallback.',
+                  });
                   const mailto = `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailtoBody)}`;
                   window.location.href = mailto;
                 } finally {
+                  setIsSubmitting(false);
                   closeContactModal();
                   setContactName('');
                   setContactEmail('');
@@ -407,11 +420,18 @@ export const FluentraLanding: React.FC = () => {
               <Textarea id="contact-message" value={contactMessage} onChange={(e) => setContactMessage(e.target.value)} placeholder={language === 'ro' ? 'Cum te putem ajuta?' : 'How can we help?'} rows={5} />
             </div>
             <DialogFooter>
-              <Button type="button" variant="ghost" onClick={closeContactModal}>
+              <Button type="button" variant="ghost" onClick={closeContactModal} disabled={isSubmitting}>
                 {language === 'ro' ? 'Anulează' : 'Cancel'}
               </Button>
-              <Button type="submit">
-                {language === 'ro' ? 'Trimite' : 'Send'}
+              <Button type="submit" disabled={isSubmitting}>
+                {isSubmitting ? (
+                  <span className="inline-flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    {language === 'ro' ? 'Se trimite...' : 'Sending...'}
+                  </span>
+                ) : (
+                  <>{language === 'ro' ? 'Trimite' : 'Send'}</>
+                )}
               </Button>
             </DialogFooter>
           </form>
