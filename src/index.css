@@ -129,4 +129,13 @@
     opacity: 1;
     transform: translateY(0);
   }
+
+  /* Subtle floating animation for the hero down arrow */
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+  .float-y {
+    animation: floatY 2.4s ease-in-out infinite;
+  }
 }

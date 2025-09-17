@@ -17,6 +17,7 @@ import {
   Mail,
   MapPin,
   ArrowRight,
+  ChevronDown,
   CheckCircle,
   Loader2
 } from 'lucide-react';
@@ -255,10 +256,22 @@ export const FluentraLanding: React.FC = () => {
             </Button>
           </div>
         </div>
+        {/* Floating down arrow centered between CTAs and bottom */}
+        <button
+          type="button"
+          onClick={() => {
+            const next = document.getElementById('problem');
+            next?.scrollIntoView({ behavior: 'smooth' });
+          }}
+          aria-label={language === 'ro' ? 'Derulează în jos' : 'Scroll down'}
+          className="absolute z-10 left-1/2 -translate-x-1/2 bottom-[15vh] h-12 w-12 rounded-full bg-primary text-primary-foreground shadow-glow/30 hover:shadow-glow transition-shadow float-y focus:outline-none focus:ring-2 focus:ring-primary/60"
+        >
+          <ChevronDown className="h-6 w-6 mx-auto" />
+        </button>
       </section>
 
       {/* Problem Section */}
-      <section className="py-20 bg-muted/30 reveal" data-reveal-delay="0ms">
+      <section id="problem" className="py-20 bg-muted/30 reveal" data-reveal-delay="0ms">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
