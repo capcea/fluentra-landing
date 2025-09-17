@@ -168,6 +168,34 @@ export const FluentraLanding: React.FC = () => {
   const [contactMessage, setContactMessage] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
 
+  // On-scroll reveal (generic)
+
+  React.useEffect(() => {
+    // Reveal-on-scroll generic observer
+    const elements = Array.from(document.querySelectorAll<HTMLElement>('.reveal'));
+    const revealObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const el = entry.target as HTMLElement;
+            const delay = el.dataset.revealDelay || '0ms';
+            el.style.transitionDelay = delay;
+            el.classList.add('reveal-visible');
+            revealObserver.unobserve(el);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+    elements.forEach((el) => revealObserver.observe(el));
+
+    return () => {
+      revealObserver.disconnect();
+    };
+  }, []);
+
+  // (Count-up removed by request)
+
   const openContactModal = () => setIsContactOpen(true);
   const closeContactModal = () => setIsContactOpen(false);
 
@@ -222,7 +250,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Problem Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-muted/30 reveal" data-reveal-delay="0ms">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
@@ -236,7 +264,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20">
+      <section className="py-20 reveal" data-reveal-delay="80ms">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-16">
             {t.benefits.title}
@@ -245,7 +273,7 @@ export const FluentraLanding: React.FC = () => {
             {t.benefits.items.map((benefit, index) => {
               const Icon = benefit.icon;
               return (
-                <Card key={index} className="border-border hover:shadow-card transition-all duration-300 group">
+                <Card key={index} className="border-border hover:shadow-card transition-all duration-300 group reveal" data-reveal-delay={`${index * 80}ms`}>
                   <CardContent className="p-6 text-center">
                     <div className="w-16 h-16 bg-gradient-to-br from-primary to-primary-dark rounded-full flex items-center justify-center mx-auto mb-4 group-hover:shadow-glow transition-all duration-300">
                       <Icon className="w-8 h-8 text-primary-foreground" />
@@ -265,7 +293,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-muted/30 reveal" data-reveal-delay="120ms">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-16">
             {t.features.title}
@@ -273,7 +301,7 @@ export const FluentraLanding: React.FC = () => {
           <div className="max-w-3xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {t.features.items.map((feature, index) => (
-                <div key={index} className="flex items-start space-x-3">
+                <div key={index} className="flex items-start space-x-3 reveal" data-reveal-delay={`${index * 60}ms`}>
                   <CheckCircle className="w-6 h-6 text-primary flex-shrink-0 mt-1" />
                   <p className="text-foreground leading-relaxed">{feature}</p>
                 </div>
@@ -284,7 +312,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Impact Section */}
-      <section className="py-20">
+      <section className="py-20 reveal" data-reveal-delay="0ms">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
             {t.impact.title}
@@ -294,8 +322,8 @@ export const FluentraLanding: React.FC = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center max-w-2xl mx-auto">
             {t.impact.stats.map((stat, index) => (
-              <div key={index} className="text-center">
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2">
+              <div key={index} className="text-center reveal" data-reveal-delay={`${index * 120}ms`}>
+                <div className="text-5xl md:text-6xl font-bold text-primary mb-2 tabular-nums">
                   {stat.value}
                 </div>
                 <div className="text-muted-foreground text-lg">
@@ -308,7 +336,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Closing & Contact Section */}
-      <section id="contact" className="py-20 bg-gradient-to-br from-primary to-primary-dark text-primary-foreground">
+      <section id="contact" className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold mb-8">
             {t.closing.title}
@@ -441,5 +469,3 @@ export const FluentraLanding: React.FC = () => {
   );
 };
 
-// Contact Modal
-// Placed outside of main return block is not valid; include inside component return above if needed.
