@@ -31,8 +31,8 @@ const content = {
       contact: "Contactează-ne"
     },
     problem: {
-      title: "Contextul Pieței",
-      description: "Distribuitorii consumă resurse esențiale gestionând manual comenzile, răspunzând la numeroase emailuri și corectând erori recurente. Aceste procese ineficiente se traduc în timp pierdut, clienți nemulțumiți și oportunități de vânzare ratate."
+      title: "Aprovizionarea se schimbă. Ești pregătit?",
+      description: "Clienții cer transparență și livrări rapide, iar distribuitorii au nevoie de eficiență și control. Fără digitalizare apar pierderi și întârzieri, cu Fluentra rămâi competitiv și îți crești afacerea."
     },
     benefits: {
       title: "Beneficii Majore",
@@ -70,6 +70,10 @@ const content = {
         "Control centralizat într-un singur dashboard"
       ]
     },
+    spotlight: {
+      title: "Distribuție fără erori. Afaceri fără limite.",
+      description: "Fluentra simplifică procesele zilnice prin automatizarea comenzilor și facturilor, eliminând erorile și dublările. Ai vizibilitate completă asupra stocurilor în timp real, ceea ce îți permite să planifici corect și să reduci pierderile. Astfel economisești resurse, scazi costurile și livrezi clienților servicii rapide și corecte, consolidând încrederea și loialitatea acestora."
+    },
     impact: {
       title: "Impact Final",
       description: "Pentru integrarea platformei, distribuitorii câștigă control total asupra comenzilor și stocurilor, reduc costurile și cresc satisfacția clienților.",
@@ -98,8 +102,8 @@ const content = {
       contact: "Contact Us"
     },
     problem: {
-      title: "Market Context",
-      description: "Distributors consume essential resources by manually managing orders, responding to numerous emails, and correcting recurring errors. These inefficient processes translate into lost time, dissatisfied customers, and missed sales opportunities."
+      title: "Distribution is changing. Are you ready?",
+      description: "Customers demand transparency and fast deliveries, while distributors need efficiency and control. Without digitalization, delays and losses pile up — with Fluentra, you stay competitive and grow your business."
     },
     benefits: {
       title: "Major Benefits",
@@ -136,6 +140,10 @@ const content = {
         "Predictive analysis for future demand",
         "Centralized control in a single dashboard"
       ]
+    },
+    spotlight: {
+      title: "Less Admin. More Business.",
+      description: "Fluentra streamlines daily operations by automating orders and invoices, eliminating errors and duplicate work. You gain full real-time visibility over stock levels, enabling accurate planning and reduced losses. This saves resources, lowers costs, and ensures fast, error-free deliveries that strengthen customer trust and loyalty."
     },
     impact: {
       title: "Final Impact", 
@@ -263,6 +271,20 @@ export const FluentraLanding: React.FC = () => {
         </div>
       </section>
 
+      {/* Spotlight Section (moved above Benefits) */}
+      <section className="py-24 bg-gradient-to-b from-primary/10 via-muted/30 to-background reveal" data-reveal-delay="60ms">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center">
+            <h2 className="text-3xl md:text-4xl font-extrabold tracking-tight text-foreground mb-5">
+              {t.spotlight.title}
+            </h2>
+            <p className="text-lg md:text-xl text-muted-foreground/90 leading-relaxed max-w-3xl mx-auto">
+              {t.spotlight.description}
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Benefits Section */}
       <section className="py-20 reveal" data-reveal-delay="80ms">
         <div className="container mx-auto px-4">
@@ -291,6 +313,8 @@ export const FluentraLanding: React.FC = () => {
           </div>
         </div>
       </section>
+
+      
 
       {/* Features Section */}
       <section className="py-20 bg-muted/30 reveal" data-reveal-delay="120ms">
