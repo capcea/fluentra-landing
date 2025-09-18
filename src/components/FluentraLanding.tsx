@@ -75,14 +75,6 @@ const content = {
       title: "Distribuție fără erori. Afaceri fără limite.",
       description: "Fluentra simplifică procesele zilnice prin automatizarea comenzilor și facturilor, eliminând erorile și dublările. Ai vizibilitate completă asupra stocurilor în timp real, ceea ce îți permite să planifici corect și să reduci pierderile. Astfel economisești resurse, scazi costurile și livrezi clienților servicii rapide și corecte, consolidând încrederea și loialitatea acestora."
     },
-    impact: {
-      title: "Impact Final",
-      description: "Pentru integrarea platformei, distribuitorii câștigă control total asupra comenzilor și stocurilor, reduc costurile și cresc satisfacția clienților.",
-      stats: [
-        { value: "40%", label: "Reducere timp pierdut" },
-        { value: "30%", label: "Reducere costuri operare" }
-      ]
-    },
     closing: {
       title: "Mulțumim!",
       description: "Distribuția nu mai trebuie să fie definită de procese manuale, erori și pierderi de timp. Platforma noastră oferă claritate, viteză și control deplin asupra întregului flux operațional."
@@ -92,6 +84,13 @@ const content = {
       email: "contact@fluentra.ro",
       address: "123 Anywhere St., Any City, ST 12345",
       ready: "Suntem gata să te ajutăm"
+    },
+    footer: {
+      copyright: "© 2024 Fluentra. Toate drepturile rezervate.",
+      privacy: "Politica de confidențialitate",
+      terms: "Termeni și condiții",
+      gdpr: "GDPR",
+      cookies: "Politica de cookie-uri"
     }
   },
   en: {
@@ -146,14 +145,6 @@ const content = {
       title: "Less Admin. More Business.",
       description: "Fluentra streamlines daily operations by automating orders and invoices, eliminating errors and duplicate work. You gain full real-time visibility over stock levels, enabling accurate planning and reduced losses. This saves resources, lowers costs, and ensures fast, error-free deliveries that strengthen customer trust and loyalty."
     },
-    impact: {
-      title: "Final Impact", 
-      description: "Through platform integration, distributors gain total control over orders and inventory, reduce costs and increase customer satisfaction.",
-      stats: [
-        { value: "40%", label: "Reduction in lost time" },
-        { value: "30%", label: "Reduction in operating costs" }
-      ]
-    },
     closing: {
       title: "Thank You!",
       description: "Distribution no longer needs to be defined by manual processes, errors and time losses. Our platform offers clarity, speed and full control over the entire operational flow."
@@ -163,6 +154,13 @@ const content = {
       email: "contact@fluentra.com",
       address: "123 Anywhere St., Any City, ST 12345",
       ready: "We are ready to assist you"
+    },
+    footer: {
+      copyright: "© 2024 Fluentra. All rights reserved.",
+      privacy: "Privacy Policy",
+      terms: "Terms and Conditions",
+      gdpr: "GDPR",
+      cookies: "Cookie Policy"
     }
   }
 };
@@ -299,7 +297,7 @@ export const FluentraLanding: React.FC = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 reveal" data-reveal-delay="80ms">
+      <section id="benefits" className="py-20 reveal" data-reveal-delay="80ms">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-16">
             {t.benefits.title}
@@ -330,7 +328,7 @@ export const FluentraLanding: React.FC = () => {
       
 
       {/* Features Section */}
-      <section className="py-20 bg-muted/30 reveal" data-reveal-delay="120ms">
+      <section id="features" className="py-20 bg-muted/30 reveal" data-reveal-delay="120ms">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold text-center text-foreground mb-16">
             {t.features.title}
@@ -348,39 +346,10 @@ export const FluentraLanding: React.FC = () => {
         </div>
       </section>
 
-      {/* Impact Section */}
-      <section className="py-20 reveal" data-reveal-delay="0ms">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-8">
-            {t.impact.title}
-          </h2>
-          <p className="text-lg text-muted-foreground mb-12 max-w-3xl mx-auto leading-relaxed">
-            {t.impact.description}
-          </p>
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center max-w-2xl mx-auto">
-            {t.impact.stats.map((stat, index) => (
-              <div key={index} className="text-center reveal" data-reveal-delay={`${index * 120}ms`}>
-                <div className="text-5xl md:text-6xl font-bold text-primary mb-2 tabular-nums">
-                  {stat.value}
-                </div>
-                <div className="text-muted-foreground text-lg">
-                  {stat.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Closing & Contact Section */}
       <section id="contact" className="py-20 bg-primary text-primary-foreground">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-8">
-            {t.closing.title}
-          </h2>
-          <p className="text-lg mb-12 max-w-3xl mx-auto leading-relaxed opacity-90">
-            {t.closing.description}
-          </p>
           
           <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-8 max-w-2xl mx-auto">
             <h3 className="text-xl font-semibold mb-6">{t.contact.ready}</h3>
@@ -502,6 +471,31 @@ export const FluentraLanding: React.FC = () => {
           </form>
         </DialogContent>
       </Dialog>
+
+      {/* Footer */}
+      <footer className="bg-muted/30 border-t border-border/60 py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+            <div className="text-sm text-muted-foreground">
+              {t.footer.copyright}
+            </div>
+            <div className="flex flex-wrap gap-4 text-sm">
+              <button className="text-muted-foreground hover:text-foreground transition-colors">
+                {t.footer.privacy}
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors">
+                {t.footer.terms}
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors">
+                {t.footer.gdpr}
+              </button>
+              <button className="text-muted-foreground hover:text-foreground transition-colors">
+                {t.footer.cookies}
+              </button>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 };

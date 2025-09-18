@@ -1,11 +1,12 @@
-import { LanguageProvider, LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { LanguageProvider } from '@/components/LanguageSwitcher';
 import { FluentraLanding } from '@/components/FluentraLanding';
+import Navbar from '@/components/Navbar';
 
 const Index = () => {
   return (
     <LanguageProvider>
       <div className="relative">
-        <LanguageSwitcher />
+        <Navbar />
         <FluentraLanding />
       </div>
     </LanguageProvider>

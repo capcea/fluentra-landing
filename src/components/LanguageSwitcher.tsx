@@ -31,15 +31,18 @@ export const useLanguage = () => {
   return context;
 };
 
-export const LanguageSwitcher: React.FC = () => {
+export const LanguageSwitcher: React.FC<{ inline?: boolean; className?: string }> = ({ inline = false, className = '' }) => {
   const { language, toggleLanguage } = useLanguage();
+
+  const baseClasses = 'bg-white/90 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300';
+  const positionClasses = inline ? '' : 'fixed top-4 right-4 z-50';
 
   return (
     <Button
       variant="outline"
-      size="sm"
+      size={inline ? 'sm' : 'sm'}
       onClick={toggleLanguage}
-      className="fixed top-4 right-4 z-50 bg-white/90 backdrop-blur-sm border-primary/20 hover:bg-primary hover:text-primary-foreground transition-all duration-300"
+      className={[positionClasses, baseClasses, className].filter(Boolean).join(' ')}
     >
       <Globe className="w-4 h-4 mr-2" />
       {language === 'ro' ? 'EN' : 'RO'}
