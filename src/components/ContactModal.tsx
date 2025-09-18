@@ -78,7 +78,7 @@ export const ContactModal: React.FC<{ language: 'ro' | 'en' }> = ({ language }) 
   };
 
   const t = content[language];
-  const contactEmail = language === 'ro' ? 'contact@fluentra.ro' : 'contact@fluentra.com';
+  const emailAddress = language === 'ro' ? 'contact@fluentra.ro' : 'contact@fluentra.com';
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -101,7 +101,7 @@ export const ContactModal: React.FC<{ language: 'ro' | 'en' }> = ({ language }) 
             name: contactName,
             email: contactEmail,
             message: contactMessage,
-            to: contactEmail,
+            to: emailAddress,
           }),
         });
         if (!res.ok) throw new Error('Request failed');
@@ -115,7 +115,7 @@ export const ContactModal: React.FC<{ language: 'ro' | 'en' }> = ({ language }) 
           title: t.errorTitle,
           description: t.errorDescription,
         });
-        const mailto = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailtoBody)}`;
+        const mailto = `mailto:${emailAddress}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(mailtoBody)}`;
         window.location.href = mailto;
       } finally {
         setIsSubmitting(false);
