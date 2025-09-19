@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useLanguage, LanguageProvider } from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/components/LanguageSwitcher';
+import { useContactModal } from '@/components/ContactModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { TrendingUp, Clock, Target, BarChart3, Users, Shield } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import { ContactModalProvider, ContactModal, useContactModal } from '@/components/ContactModal';
+import Footer from '@/components/Footer';
 
 const content = {
   ro: {
@@ -121,6 +122,10 @@ const BenefitsContent = () => {
   const { openModal } = useContactModal();
   const t = content[language];
 
+  const handleContactClick = () => {
+    openModal();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -191,7 +196,7 @@ const BenefitsContent = () => {
               : 'Contact us to discover how Fluentra can transform your distribution.'}
           </p>
           <button 
-            onClick={openModal}
+            onClick={handleContactClick}
             className="inline-flex items-center px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors"
           >
             {language === 'ro' ? 'Contactează-ne' : 'Contact Us'}
@@ -207,19 +212,13 @@ const BenefitsContent = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
 const Benefits = () => {
-  return (
-    <LanguageProvider>
-      <ContactModalProvider>
-        <BenefitsContent />
-        <ContactModal language="ro" />
-      </ContactModalProvider>
-    </LanguageProvider>
-  );
+  return <BenefitsContent />;
 };
 
 export default Benefits;

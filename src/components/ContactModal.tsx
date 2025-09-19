@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from '@/components/ui/use-toast';
 import { Loader2 } from 'lucide-react';
+import { useLanguage } from './LanguageSwitcher';
 
 interface ContactModalContextType {
   isOpen: boolean;
@@ -35,7 +36,8 @@ export const useContactModal = () => {
   return context;
 };
 
-export const ContactModal: React.FC<{ language: 'ro' | 'en' }> = ({ language }) => {
+export const ContactModal: React.FC = () => {
+  const { language } = useLanguage();
   const { isOpen, closeModal } = useContactModal();
   const [contactName, setContactName] = useState('');
   const [contactEmail, setContactEmail] = useState('');

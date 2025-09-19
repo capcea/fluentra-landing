@@ -1,10 +1,11 @@
 import { Link } from 'react-router-dom';
-import { useLanguage, LanguageProvider } from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/components/LanguageSwitcher';
+import { useContactModal } from '@/components/ContactModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { ShoppingCart, FileText, Truck, ArrowRight, CheckCircle } from 'lucide-react';
 import Navbar from '@/components/Navbar';
-import { ContactModalProvider, ContactModal, useContactModal } from '@/components/ContactModal';
+import Footer from '@/components/Footer';
 
 const content = {
   ro: {
@@ -120,6 +121,10 @@ const HowItWorksContent = () => {
   const { openModal } = useContactModal();
   const t = content[language];
 
+  const handleContactClick = () => {
+    openModal();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -232,7 +237,7 @@ const HowItWorksContent = () => {
             {t.cta.subtitle}
           </p>
           <button 
-            onClick={openModal}
+            onClick={handleContactClick}
             className="inline-flex items-center px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors"
           >
             {t.cta.button}
@@ -248,19 +253,13 @@ const HowItWorksContent = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
 const HowItWorks = () => {
-  return (
-    <LanguageProvider>
-      <ContactModalProvider>
-        <HowItWorksContent />
-        <ContactModal language="ro" />
-      </ContactModalProvider>
-    </LanguageProvider>
-  );
+  return <HowItWorksContent />;
 };
 
 export default HowItWorks;

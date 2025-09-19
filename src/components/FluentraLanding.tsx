@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from './LanguageSwitcher';
+import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
@@ -480,18 +481,18 @@ export const FluentraLanding: React.FC = () => {
               {t.footer.copyright}
             </div>
             <div className="flex flex-wrap gap-4 text-sm">
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
+              <Link to="/privacy-policy" className="text-muted-foreground hover:text-foreground transition-colors">
                 {t.footer.privacy}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
+              </Link>
+              <Link to="/terms-and-conditions" className="text-muted-foreground hover:text-foreground transition-colors">
                 {t.footer.terms}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
+              </Link>
+              <Link to="/gdpr" className="text-muted-foreground hover:text-foreground transition-colors">
                 {t.footer.gdpr}
-              </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
+              </Link>
+              <Link to="/cookie-policy" className="text-muted-foreground hover:text-foreground transition-colors">
                 {t.footer.cookies}
-              </button>
+              </Link>
             </div>
           </div>
         </div>

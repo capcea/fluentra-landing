@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
-import { useLanguage, LanguageProvider } from '@/components/LanguageSwitcher';
+import { useLanguage } from '@/components/LanguageSwitcher';
+import { useContactModal } from '@/components/ContactModal';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Check, X, ChevronDown, ChevronUp } from 'lucide-react';
 import { useState } from 'react';
 import Navbar from '@/components/Navbar';
-import { ContactModalProvider, ContactModal, useContactModal } from '@/components/ContactModal';
+import Footer from '@/components/Footer';
 
 const content = {
   ro: {
@@ -186,6 +187,10 @@ const PricingContent = () => {
   const t = content[language];
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  const handleContactClick = () => {
+    openModal();
+  };
+
   return (
     <div className="min-h-screen bg-background">
       <Navbar />
@@ -303,7 +308,7 @@ const PricingContent = () => {
               : 'Start your 14-day free trial and discover how Fluentra can transform your distribution.'}
           </p>
           <button 
-            onClick={openModal}
+            onClick={handleContactClick}
             className="inline-flex items-center px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-white/90 transition-colors"
           >
             {language === 'ro' ? 'Începe gratuit' : 'Start Free Trial'}
@@ -319,19 +324,13 @@ const PricingContent = () => {
           </Link>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
 
 const Pricing = () => {
-  return (
-    <LanguageProvider>
-      <ContactModalProvider>
-        <PricingContent />
-        <ContactModal language="ro" />
-      </ContactModalProvider>
-    </LanguageProvider>
-  );
+  return <PricingContent />;
 };
 
 export default Pricing;
